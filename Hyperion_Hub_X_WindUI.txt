@@ -1,18 +1,38 @@
--- Hyperion Hub X | WindUI 1.6.41
+-- Hyperion Hub X | WindUI
 -- WindUI compatibility adapter for the existing Moon-Hub-X feature code.
--- The feature implementation below is kept intact; only the UI API is adapted.
 
-local WindUI = loadstring(game:HttpGet(
-    "https://github.com/Footagesus/WindUI/releases/download/1.6.41/main.lua"
-))()
+-- ✅ Define os gradientes ANTES de qualquer coisa usar
+getgenv().ButtonGradients = getgenv().ButtonGradients or {
+    Background = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 25, 30)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(45, 45, 55)),
+    }),
+    Stroke = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 170, 255)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(170, 0, 255)),
+    }),
+}
+
+-- ✅ Carrega WindUI com pcall pra dar erro claro se falhar
+local WindUI
+do
+    local ok, result = pcall(function()
+        return loadstring(game:HttpGet(
+            "https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"
+        ))()
+    end)
+    if not ok or not result then
+        warn("[Hyperion] Falha ao carregar WindUI: " .. tostring(result))
+        warn("[Hyperion] Verifique sua internet / executor")
+        return
+    end
+    WindUI = result
+end
 
 local Fluent = {
     Options = {},
     Unloaded = false,
 }
-
-local function normalizeConfig(name, cfg)
-    cfg = cfg or {}
     local out = {}
 
     for k, v in pairs(cfg) do
