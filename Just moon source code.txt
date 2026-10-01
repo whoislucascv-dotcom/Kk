@@ -90,7 +90,7 @@ mainopens.Parent = mainopen
 local SizeBackMulti = 0.1
 local ImageURL = "https://od.lk/d/ODhfMjA4MjE1NTVfNHdtS3g/e313acf65d99b4ae6cae5a5295a5c089.jpg"
 local ImageFolder = "FluentModify/mainopen"
-local ImageName = "new_logo.png"
+local ImageName = "new_logo.jpg"
 
 if not isfolder(ImageFolder) then
     makefolder(ImageFolder)
